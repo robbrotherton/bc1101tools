@@ -52,8 +52,8 @@ geom_balance <- function(data, size = 4){
 
 geom_labels <- function(data, size){
 
-  dat <- data.frame(x = data) %>%
-    dplyr::group_by(x) %>%
+  dat <- data.frame(x = data) |>
+    dplyr::group_by(x) |>
     dplyr::mutate(y = 1:dplyr::n() - .5,
            lab = x - mean(data),
            color = dplyr::case_when(
