@@ -44,10 +44,10 @@ SD_table <- function(x, population_sd = FALSE, include = c("mean", "devs", "devs
 
   symbol <- ifelse(population_sd, "\\sigma", "s")
 
-  summary_mean <- ifelse("mean" %in% include, glue::glue("\\(M = {M}\\)"), "")
-  summary_ss   <- ifelse("ss" %in% include, glue::glue("\\(SS = {SS}\\)"), "")
-  summary_var  <- ifelse("var" %in% include, glue::glue("\\({symbol}^2 = {s2}\\)"), "")
-  summary_sd   <- ifelse("sd" %in% include, glue::glue("\\({symbol} = {SD}\\)"), "")
+  summary_mean <- ifelse("mean" %in% include, glue::glue("\\(M = {M}\\)"), "&nbsp;")
+  summary_ss   <- ifelse("ss" %in% include, glue::glue("\\(SS = {SS}\\)"), "&nbsp;")
+  summary_var  <- ifelse("var" %in% include, glue::glue("\\({symbol}^2 = {s2}\\)"), "&nbsp;")
+  summary_sd   <- ifelse("sd" %in% include, glue::glue("\\({symbol} = {SD}\\)"), "&nbsp;")
 
   summary_rows <- rbind(
     c(X = summary_mean, devs = "", devs2 = summary_ss),
@@ -60,10 +60,12 @@ SD_table <- function(x, population_sd = FALSE, include = c("mean", "devs", "devs
   col.names <- c(x_var_name,"\\(X-M\\)","\\((X-M)^2\\)")
 
   tab <- knitr::kable(dat, format = "html", escape = FALSE, align = align,
-                      col.names = col.names)
+                      col.names = col.names,
+                      table.attr = "style='width:33.3%;'")
 
 
   tab <- tab |>
+    # kableExtra::kable_styling(full_width = TRUE) |>
     kableExtra::column_spec(1:3, width = "30%") |>
     kableExtra::row_spec(1:(nrow(dat)), extra_css = "border: none;") |>
     kableExtra::row_spec((nrow(dat)-2):nrow(dat), extra_css = "font-size: 0.8em;") |>
