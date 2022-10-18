@@ -48,7 +48,8 @@ plot_distribution <- function(fun = dnorm,
                               fill_colors = NULL,
                               alpha = 0.7,
                               arrow = NULL,
-                              arrow_length = 3) {
+                              arrow_y = 0.4,
+                              arrow_size = 0.2) {
 
   if (!"mean" %in% names(args)) args$mean <- 0
   if (!"sd" %in% names(args)) args$sd <- 1
@@ -62,8 +63,6 @@ plot_distribution <- function(fun = dnorm,
   if (is.null(xlim)) {
     xlim <- c(min(xbreaks), max(xbreaks))
   }
-
-  # return(xbreaks)
 
   base <- ggplot2::ggplot() +
     ggplot2::scale_x_continuous(breaks = xbreaks, name = xlab) +
@@ -112,11 +111,12 @@ plot_distribution <- function(fun = dnorm,
   }
 
   if (!is.null(arrow)) {
-    y <- density(arrow) * arrow_length
+    # y <- density(arrow) * arrow_length
 
     arrow_geom <- ggplot2::geom_segment(ggplot2::aes(x = arrow, xend = arrow,
-                                                     y = y, yend = 0),
-                                        arrow = ggplot2::arrow(type = "closed"),
+                                                     y = arrow_y, yend = 0),
+                                        arrow = ggplot2::arrow(type = "closed",
+                                                               length = ggplot2::unit(arrow_size, "in")),
                                         color = "red")
   }
 
