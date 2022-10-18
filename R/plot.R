@@ -164,3 +164,28 @@ theme_bc1101 <- function() {
                  panel.grid = ggplot2::element_blank(),
                  axis.line = ggplot2::element_line())
 }
+
+
+#' Title
+#'
+#' @param filename
+#' @param plot
+#' @param dir
+#' @param subdir
+#' @param width
+#' @param height
+#'
+#' @return
+#' @export
+#'
+#' @examples
+plot_save <- function(filename,
+                      plot = last_plot(),
+                      dir = "slides",
+                      subdir = "media",
+                      width = 5, height = 3) {
+
+  ggplot2::ggsave(here::here(dir, subdir, filename),
+                  width = width, height = height)
+
+}

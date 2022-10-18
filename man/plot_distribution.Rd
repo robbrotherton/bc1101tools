@@ -14,7 +14,9 @@ plot_distribution(
   linetype = 1,
   fill_colors = NULL,
   alpha = 0.7,
-  arrow = NULL
+  arrow = NULL,
+  arrow_y = 0.4,
+  arrow_size = 0.2
 )
 }
 \arguments{
