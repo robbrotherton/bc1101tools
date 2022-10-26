@@ -180,12 +180,13 @@ theme_bc1101 <- function() {
 #'
 #' @examples
 plot_save <- function(filename,
-                      plot = last_plot(),
+                      plot = ggplot2::last_plot(),
                       dir = "slides",
                       subdir = "media",
                       width = 5, height = 3) {
 
-  ggplot2::ggsave(here::here(dir, subdir, filename),
+  ggplot2::ggsave(filename = here::here(dir, subdir, filename),
+                  plot = plot,
                   width = width, height = height)
 
 }

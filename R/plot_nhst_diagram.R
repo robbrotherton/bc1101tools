@@ -24,9 +24,9 @@
 #' @examples
 plot_nhst_diagram <- function(text.size = 7,
                          pop1lab = "Known\nOriginal\npopulation", pop1color = "black", pop1line = 1,
-                         pop2lab = "Unknown\nTreated\npopulation", pop2color = "black", pop2fill = "lightskyblue", pop2line = 2,
+                         pop2lab = "Unknown\nTreated\npopulation", pop2color = "black", pop2fill = "lightskyblue2", pop2line = 2,
                          sample1lab = "Sample", sample1color = "black", sample1line = 1,
-                         sample2lab = "Treated\nSample", sample2color = "black", sample2fill = "lightskyblue", sample2line = 1,
+                         sample2lab = "Treated\nSample", sample2color = "black", sample2fill = "lightskyblue2", sample2line = 1,
                          sample_line = "black") {
 
 
@@ -61,7 +61,7 @@ plot_nhst_diagram <- function(text.size = 7,
     # curve between populations
     ggplot2::geom_curve(ggplot2::aes(x = 6.65, xend = 8.35, y = 6.5, yend=6.5), curvature = -0.2, linetype = 8,
                arrow = ggplot2::arrow(length = ggplot2::unit(.1, "inches"), ends = "both", type = "closed"),
-               color = "red") + # top
+               color = "black") + # top
     ggplot2::coord_fixed() +
     ggplot2::theme_void()
 
