@@ -6,7 +6,7 @@
 \usage{
 plot_save(
   filename,
-  plot = last_plot(),
+  plot = ggplot2::last_plot(),
   dir = "slides",
   subdir = "media",
   width = 5,

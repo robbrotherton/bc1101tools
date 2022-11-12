@@ -11,14 +11,14 @@ plot_nhst_diagram(
   pop1line = 1,
   pop2lab = "Unknown\\nTreated\\npopulation",
   pop2color = "black",
-  pop2fill = "lightskyblue",
+  pop2fill = "lightskyblue2",
   pop2line = 2,
   sample1lab = "Sample",
   sample1color = "black",
   sample1line = 1,
   sample2lab = "Treated\\nSample",
   sample2color = "black",
-  sample2fill = "lightskyblue",
+  sample2fill = "lightskyblue2",
   sample2line = 1,
   sample_line = "black"
 )
