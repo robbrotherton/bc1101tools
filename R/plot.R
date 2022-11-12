@@ -66,7 +66,7 @@ plot_distribution <- function(fun = dnorm,
 
   base <- ggplot2::ggplot() +
     ggplot2::scale_x_continuous(breaks = xbreaks, name = xlab) +
-    ggplot2::scale_y_continuous(expand = c(0,0))
+    ggplot2::scale_y_continuous(expand = ggplot2::expansion(c(0,.01)))
 
   curve_geom <- ggplot2::stat_function(fun = fun, args = args, xlim = xlim)
   segment_geom <- NULL
