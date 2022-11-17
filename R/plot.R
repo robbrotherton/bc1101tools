@@ -113,8 +113,8 @@ plot_distribution <- function(fun = dnorm,
   if (!is.null(arrow)) {
     # y <- density(arrow) * arrow_length
 
-    arrow_geom <- ggplot2::geom_segment(ggplot2::aes(x = arrow, xend = arrow,
-                                                     y = arrow_y, yend = 0),
+    arrow_geom <- ggplot2::geom_segment(ggplot2::aes(x = ggplot2::arrow, xend = ggplot2::arrow,
+                                                     y = ggplot2::arrow_y, yend = 0),
                                         arrow = ggplot2::arrow(type = "closed",
                                                                length = ggplot2::unit(arrow_size, "in")),
                                         color = "red")
@@ -132,6 +132,84 @@ plot_distribution <- function(fun = dnorm,
       arrow_geom
 
 }
+
+
+
+plot_CI <- function(confidence = .95, dist = "norm", n = 100, df = 99, labels = "all", M = 0, SD = 1, std.err = NULL) {
+
+  if (labels=="all") {
+    labels <- c("point","width","t","M","info")
+  }
+
+  r <- function(x) sprintf("%.2f", x)
+
+  alpha <- 1 - confidence
+  sM <- ifelse(is.null(std.err), SD/sqrt(n), std.err)
+
+  if (dist=="norm") {
+    fun <- dnorm
+    args = NULL
+    xlim = qnorm(c(alpha/2, 1-alpha/2))
+    y <- fun(0)
+    y_width <- fun(xlim)
+  }
+
+  if (dist=="t") {
+    fun <- dt
+    args <- list(df = df)
+    xlim = qt(c(alpha/2, 1-alpha/2), df = df)
+    y <- fun(0, df = df)
+    y_width <- fun(xlim, df = df)
+  }
+
+  plot <- ggplot2::ggplot() +
+    # ggplot2::geom_line(stat = "function", fun = fun,args = args, xlim = c(-4, 4), color = "black") +
+    ggplot2::stat_function(geom = "line", fun = fun, args = args, color = "black", xlim = c(-4, 4)) +
+    ggplot2::stat_function(geom = "area", fun = fun, args = args, fill = "lightblue", alpha = .5, xlim = xlim) +
+    ggplot2::scale_y_continuous(limits = c(-.015, .4)) +
+    ggplot2::theme_void()
+
+  if ("point" %in% labels) {
+    plot <- plot +
+      ggplot2::geom_point(ggplot2::aes(x = 0, y = 0)) +
+      ggplot2::geom_segment(ggplot2::aes(x = 0, xend = 0, y = y, yend = 0))
+  }
+
+  if ("width" %in% labels) {
+    plot <- plot +
+      ggplot2::geom_segment(ggplot2::aes(x = xlim[1], xend = xlim[2], y = y_width[1]/2, yend = y_width[2]/2), linetype = 2,
+                   arrow = ggplot2::arrow(ends = "both", length = ggplot2::unit(0.15, "inches")))
+  }
+
+  if ("t" %in% labels) {
+    plot <- plot +
+      ggplot2::geom_text(ggplot2::aes(x = c(xlim, 0), y = 0, label = c(round(xlim, 2), "t = 0")), vjust = 1.2)
+  }
+
+  if ("M" %in% labels) {
+    M1 <- r(M + xlim[1] * sM)
+    M2 <- r(M + xlim[2] * sM)
+    M_ <- r(M)
+
+    plot <- plot +
+      ggrepel::geom_text_repel(ggplot2::aes(x = c(xlim, 0), y = c(y_width, y), label = c(M1,M2, M_)), nudge_y = .04)
+  }
+
+  if ("info" %in% labels) {
+    plot <- plot +
+      ggplot2::geom_text(ggplot2::aes(x = -4, y = .4), hjust = 0, vjust = 1, family = "serif", size = 8,
+                label = paste0("If...\n",
+                               "Confidence = ", confidence * 100, "%\n",
+                               "n = ", n, "\n",
+                               "M = ", round(M, 2), "\n",
+                               "SD = ", round(SD, 2), "\n",
+                               expression(s[M]==3), round(sM, 2)))
+  }
+
+  plot
+
+}
+
 
 
 #' Title
