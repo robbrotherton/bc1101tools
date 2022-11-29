@@ -2,11 +2,11 @@
 % Please edit documentation in R/stat-tables.R
 \name{t_table}
 \alias{t_table}
-\title{Title}
+\title{t table}
 \usage{
 t_table(
   dfs = 1:15,
-  qs = c(0.1, 0.05, 0.025, 0.01, 0.005),
+  alphas = c(0.1, 0.05, 0.025, 0.01, 0.005),
   two_tailed_only = FALSE,
   dots = length(dfs)
 )
@@ -18,5 +18,5 @@ t_table(
 
 }
 \description{
-Title
+t table
 }

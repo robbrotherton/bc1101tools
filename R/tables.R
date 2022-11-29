@@ -50,3 +50,52 @@ frequency_table <- function(x, f = NULL, values_name = "\\(X\\)", binwidth = 1, 
   knitr::kable(data, format = 'html', escape = F, align = 'c')
 
 }
+
+
+
+#' Title
+#'
+#' @param factor_a_name
+#' @param factor_b_name
+#' @param factor_a_levels
+#' @param factor_b_levels
+#' @param cell_values
+#'
+#' @return
+#' @export
+#'
+#' @examples
+anova_2x2_table <- function(factor_a_name = "Factor A",
+                            factor_b_name = "Factor B",
+                            factor_a_levels = c("\\(A_1\\)", "\\(A_2\\)"),
+                            factor_b_levels = c("\\(B_1\\)", "\\(B_2\\)"),
+                            cell_values = c("\\(A_1 B_1\\)","\\(A_2 B_1\\)","\\(A_2 B_1\\)","\\(A_2 B_2\\)")
+                            ) {
+
+  htmltools::HTML(glue::glue('
+    <table>
+        <thead>
+            <tr>
+                <th colspan="2" rowspan="2"></th>
+                <th colspan="2" style="text-align: center;">{factor_a_name}</th>
+            </tr>
+            <tr>
+
+                <th style="text-align: center;">{factor_a_levels[1]}</th><th style="text-align: center;">{factor_a_levels[2]}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="2" style="vertical-align : middle;text-align:center;">{factor_b_name}</td>
+                <td>{factor_b_levels[1]}</td>
+                <td>{cell_values[1]}</td><td>{cell_values[2]}</td>
+            </tr>
+            <tr>
+                <td>{factor_b_levels[2]}</td>
+                <td>{cell_values[3]}</td><td>{cell_values[4]}</td>
+            </tr>
+        </tbody>
+    </table>
+
+                '))
+}

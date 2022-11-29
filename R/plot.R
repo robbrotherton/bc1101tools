@@ -212,6 +212,34 @@ plot_CI <- function(confidence = .95, dist = "norm", n = 100, df = 99, labels = 
 
 
 
+#' Plot 2x2 generic
+#'
+#' @param A1B1
+#' @param A1B2
+#' @param A2B1
+#' @param A2B2
+#'
+#' @return
+#' @export
+#'
+#' @examples
+plot_2x2_generic <- function(A1B1, A1B2, A2B1, A2B2) {
+
+  data <- data.frame(IV1 = c("A1","A1","A2","A2"),
+                     IV2 = c("B1","B2","B1","B2"),
+                     value = c(A1B1, A1B2, A2B1, A2B2))
+
+  ggplot2::ggplot(data, ggplot2::aes(x = IV1, y = value, linetype = IV2, group = IV2)) +
+    ggplot2::geom_line() +
+    ggplot2::geom_point() +
+    ggplot2::scale_y_continuous(limits = c(0.5,2.5), breaks = c(1,2), labels = c("Low","High")) +
+    ggplot2::labs(y = "DV", x = "Factor A", linetype = "Factor B") +
+    theme_bc1101() +
+    ggplot2::theme(legend.background = ggplot2::element_blank())
+}
+
+
+
 #' Title
 #'
 #' @return
