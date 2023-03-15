@@ -7,6 +7,7 @@
 plot_histogram(
   x,
   binwidth = 1,
+  breaks = NULL,
   xlab = "Score",
   ylab = "Frequency",
   block = FALSE

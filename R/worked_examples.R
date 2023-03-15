@@ -183,6 +183,36 @@ example_ANOVA_factorial <- function(data) {
 
 }
 
+
+
+#' Title
+#'
+#' @param x
+#' @param y
+#'
+#' @return
+#' @export
+#'
+#' @examples
+example_correlation <- function(x, y) {
+
+  p <- (x-mean(x)) * (y-mean(y))
+  sp <- sum(p)
+  ss_x <- sum((x-mean(x))^2)
+  ss_y <- sum((y-mean(y))^2)
+  r <- sp/sqrt(ss_x * ss_y)
+
+  list(
+    p = p,
+    sp = sp,
+    ss_x = ss_x,
+    ss_y = ss_y,
+    r = r
+  )
+}
+
+
+
 # Helper functions --------------------------------------------------------
 
 SS <- function(x) sum((x - mean(x))^2)

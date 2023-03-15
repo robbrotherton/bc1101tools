@@ -9,13 +9,14 @@
 #' @export
 #'
 #' @examples
-plot_histogram <- function(x, binwidth = 1, xlab = "Score", ylab = "Frequency", block = FALSE) {
+plot_histogram <- function(x, binwidth = 1, breaks = NULL, xlab = "Score", ylab = "Frequency", block = FALSE) {
 
   id <- if(block) seq_along(x) else NULL
 
   plot <- ggplot2::ggplot() +
     ggplot2::geom_histogram(ggplot2::aes(x = x, group = id),
-                            binwidth = binwidth, color = 'black', fill = "#7f7f7f") +
+                            binwidth = binwidth, breaks = breaks,
+                            color = 'black', fill = "#7f7f7f") +
     ggplot2::scale_y_continuous(expand = ggplot2::expansion(c(0, .02))) +
     ggplot2::labs(x = xlab, y = ylab)
 
@@ -236,6 +237,33 @@ plot_2x2_generic <- function(A1B1, A1B2, A2B1, A2B2) {
     ggplot2::labs(y = "DV", x = "Factor A", linetype = "Factor B") +
     theme_bc1101() +
     ggplot2::theme(legend.background = ggplot2::element_blank())
+}
+
+
+
+#' Title
+#'
+#' @param df
+#' @param ellipse
+#' @param line
+#'
+#' @return
+#' @export
+#'
+#' @examples
+plot_correlation_generic <- function(df, ellipse = FALSE, line = FALSE, ...) {
+  plot <- ggplot2::ggplot(data = df, ggplot2::aes(x = df[,1], y = df[,2])) +
+    ggplot2::geom_point() +
+    ggplot2::labs(x = "X", y = "Y") +
+    theme_bc1101() +
+    ggplot2::theme(axis.text.x = ggplot2::element_blank(),
+                   axis.text.y = ggplot2::element_blank())
+
+  if (ellipse) plot <- plot + ggplot2::stat_ellipse()
+  if (line) plot <- plot + ggplot2::geom_smooth(method = "lm", ...)
+
+  plot
+
 }
 
 

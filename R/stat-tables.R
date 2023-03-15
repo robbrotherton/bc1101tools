@@ -60,3 +60,22 @@ t_table <- function(dfs = 1:15, alphas = c(.1, .05, .025, .01, .005), two_tailed
 #                         col.names = c("Proportion<br>in 2 tails", paste0("<br>",qs*2))) %>%
 #   kableExtra::add_header_above(c("Proportion\nin 1 tail", paste0("\n",qs)), align = "r") %>%
 #   kableExtra::column_spec(1, bold = T)
+
+
+
+stat_table_anova <- function() {
+
+  dfs <- setNames(1:10, 1:10)
+
+  aov_tab <- purrr::map_df(.x = dfs, ~qf(.95, df1 = 1:10, df2 = .x)) |>
+    t() |>
+    as.data.frame() |>
+    setNames(1:10) |>
+    tibble::rownames_to_column(var = "df_denominator")
+
+
+  knitr::kable(aov_tab, format = "html", escape=FALSE, align = "c", digits = 3,
+               col.names = c("\\(df_{denominator}\\)", 1:10)) |>
+    kableExtra::add_header_above(c("\\(\\alpha = .05\\)", "\\(df_{numerator}\\)" = 10), escape=FALSE, align = "left")
+
+}
