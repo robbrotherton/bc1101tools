@@ -94,7 +94,7 @@ SP_table <- function(x, y, digits = 2, align = "r") {
   x_devs2 <- x_devs^2
 
   y_devs <- y-mean(y)
-  y_devs2 <- x_devs^2
+  y_devs2 <- y_devs^2
 
   f <- function(x, digits = 2) {
     sprintf(glue::glue("%.{digits}f"), round(x, digits))
